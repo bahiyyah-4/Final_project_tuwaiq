@@ -5,6 +5,11 @@
 ## Features:
 
 ## Pages:
+-Login page
+-Register page
+- Add product 
+- User page
+- Home
 
 ## Users :
 
