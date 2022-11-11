@@ -5,8 +5,9 @@
 ## Features:
 
 ## Pages:
--Login page
--Register page
+
+- Login page
+- Register page
 - Add product 
 - User page
 - Home
