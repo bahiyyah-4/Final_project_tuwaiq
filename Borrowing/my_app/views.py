@@ -6,7 +6,11 @@ from product.models import Prodect
 
 
 def home(reguest):
-    products = Prodect.objects.filter(status=Prodect.ACTIVE)[0:8]
+
+    if reguest.user.is_authenticated:
+        products = Prodect.objects.filter(status=Prodect.ACTIVE).exclude(user=reguest.user)[0:8]
+    else:
+        products = Prodect.objects.filter(status=Prodect.ACTIVE)[0:8]
 
     return render(reguest, 'my_app/home.html',{'products':products})
 
