@@ -6,10 +6,14 @@ from product.models import Prodect
 
 
 def home(reguest):
-    products = Prodect.objects.all()[0:6]
+    products = Prodect.objects.filter(status=Prodect.ACTIVE)[0:8]
 
     return render(reguest, 'my_app/home.html',{'products':products})
 
+
+def contact(request ):
+
+    return render(request,"my_app/contact.html")
 
 def about(reguest):
     return render(reguest, 'my_app/about.html')

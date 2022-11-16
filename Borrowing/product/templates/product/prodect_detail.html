@@ -1,22 +1,58 @@
 {% extends 'my_app/base.html' %}
 {% block title %} {{product.title}} {% endblock %}
 {% block content %}
-      {% if product.image %}
-        <div class="image mb-4">
-         <img src="{{product.image.url }}" alt="">
-    
-        </div>
-      {%endif%}
-     <h1 class="text-2xl">{{product.title}}</h1> 
+<a href="#" class="relative block ">
+  <button
+    type="button"
+    class="absolute right-4 top-4 rounded-full bg-black p-2 text-white"
+  >
+    <span class="sr-only">Wishlist</span>
+    <svg
+      class="h-4 w-4"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+      ></path>
+    </svg>
+  </button>
+  {% if product.image %}
+   <img
+    alt=""
+    src="{{product.image.url }}" 
+    class="h-56 w-full object-contain lg:h-72"
+   /> 
+  {%endif%}
 
-     <p class="text-xs text-gray-500">
-      ${{product.price}}
+  <div class="p-6">
+    <h3 class="mt-4 text-lg font-bold">{{product.title}}</h3>
+
+    <p class="mt-2 text-sm text-gray-700">${{product.get_display_price}}
       -
-     <a href="{% url 'userprofile:user_detail' product.user.id %}">{% firstof  product.user.get_full_name   product.user.username %}</a> 
-     </p>
-
-     {% if product.description %}
-        <p class="mt-4 text-gray-500">{{product.description}}</p>
+      <a href="{% url 'userprofile:user_detail' product.user.id %}">{% firstof  product.user.get_full_name   product.user.username %}</a> 
+    </p>
+    {% if product.description %}
+    <p class="mt-4 text-gray-500">{{product.description}}</p>
      {% endif %}
+     <a href="{% url 'product:add_to_cart' product.id %}">
+      <button
+      type="button"
+      class="mt-4 block w-full rounded-sm bg-gray-500 p-4 text-sm font-medium"
+    >
+      Add to Cart
+    </button>
+    
+    </a>
+ 
+
+   
+  </div>
+</a>
      
 {% endblock %}

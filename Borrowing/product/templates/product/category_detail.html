@@ -9,7 +9,7 @@
                    <a href="{% url 'product:product_detail' product.Category.slug product.slug %}">
                     {% if product.image %}
                     <div class="image mb-2">
-                     <img src="{{product.image.url }}" alt="">
+                     <img src="{{product.image.url }}" alt="" class="h-60 w-full object-contain lg:h-72">
                     </div>
                     {%endif%}
                        <h2 class="text-xl"> {{product.title}}</h2> 

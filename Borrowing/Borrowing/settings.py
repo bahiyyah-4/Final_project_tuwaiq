@@ -26,6 +26,9 @@ SECRET_KEY = 'django-insecure-nw!m@)7c#+infu6xhpp_mgf2xn+dj=527e&$srt*5u!4wv2d-n
 DEBUG = True
 
 ALLOWED_HOSTS = []
+CART_SESSION_ID='cart'# for cart
+SESSION_COOKIE_AGE= 86400
+LOGIN_URL ='login'
 LOGIN_REDIRECT_URL ='account_user'
 LOGOUT_REDIRECT_URL ='home'
 # Application definition
@@ -65,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'product.context_processors.cart',
             ],
         },
     },
