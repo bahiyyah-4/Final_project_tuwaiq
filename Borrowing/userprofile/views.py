@@ -1,42 +1,57 @@
-from django.shortcuts import render,redirect
-from  django.contrib.auth import login
+from django.shortcuts import render,redirect,get_object_or_404
+from django.http import HttpRequest, HttpResponse
 from  django.contrib import messages
 from  django.contrib.auth.decorators import login_required 
 from product.forms import ProductForm
-from django.contrib.auth.forms import UserCreationForm 
 from django.contrib.auth.models import User
-from .models import Userprofile
-from product.models import Prodect ,Category,Order,OrderItem
+from django.contrib.auth import authenticate, login, logout as auth_logout
+from product.models import Prodect ,OrderItem
 from django.utils.text import slugify
 # Create your views here.
+# user_detail.
 def user_detail(request , pk ):
     user =User.objects.get(pk=pk)
     products=user.products.filter(status=Prodect.ACTIVE)
     return render(request,"userprofile/user_detail.html",{"user":user,'products':products})
 
-def signup(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+#register
 
-        if form.is_valid():
-            user = form.save()
+def register_user(request : HttpRequest):
 
+    if request.method == "POST":
+
+        new_user = User.objects.create_user(username=request.POST["username"], password=request.POST["password"])
+        new_user.save()
+
+    return render(request, "userprofile/register.html")
+
+
+
+def login_user(request : HttpRequest):
+    msg = ""
+    if request.method == "POST":
+        user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
+  
+        if user:
             login(request, user)
- 
-            userprofile = Userprofile.objects.create(user=user)
-            return redirect('my_app:home')
-        
-    else:
-        form = UserCreationForm()
-    
- 
-    return render(request,"userprofile/signup.html",{"form":form})
+            return redirect("my_app:about")
+        else:
+            msg = "User Not Found , check your credentials"
 
-@login_required 
+    return render(request, "userprofile/login.html", {"msg" : msg})
+
+
+    
+def logout(request: HttpRequest):
+    auth_logout(request)
+ 
+    return redirect('my_app:about')
+
+
 def account_user(request):
     return render(request,'userprofile/account_user.html')
 
-@login_required
+
 def add_product(request):
   if request.method == 'POST':
       form = ProductForm(request.POST,request.FILES)
@@ -52,6 +67,8 @@ def add_product(request):
   else:
     form = ProductForm()
   return render(request,'userprofile/product_form.html',{'title':'Add prodect','form':form})
+
+
 
 @login_required
 def edit_product(request, pk):
@@ -70,21 +87,25 @@ def edit_product(request, pk):
 
     return render(request,'userprofile/product_form.html',{'title':'Edit prodect','form':form ,'product':product})
 
+
 @login_required
 def delete_product(request, pk):
-    product = Prodect.objects.filter(user=request.user).get(pk = pk )
+    product = Prodect.objects.filter(user=request.user).get(pk=pk)
     product.status = Prodect.DELETED
     product.save()
-    messages.success(request,"the product was deleted!")
+
+    messages.success(request, 'The product was deleted!')
+
     return redirect('userprofile:my_product')
-    
 
-
+   # products=request.user.products.exclude(status=Prodect.DELETED)
 
 @login_required 
 def my_product(request):
-    products=request.user.products.exclude(status=Prodect.DELETED)
-    orders_items =OrderItem.objects.filter(product__user = request.user)
+    products = request.user.products.exclude(status=Prodect.DELETED)
+    order_items = OrderItem.objects.filter(product__user=request.user)
 
-    return render(request,"userprofile/my_product.html",{'products':products,'orders_items':orders_items})
-
+    return render(request, 'userprofile/my_product.html', {
+        'products': products,
+        'order_items': order_items
+    })

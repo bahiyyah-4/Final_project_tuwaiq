@@ -1,22 +1,29 @@
 {% extends 'my_app/base.html' %}
 {% block title %} welcome{% endblock %}
 {% block content %}
-<section class="bg-gray-600 text-gray-100">
+<section class="relative bg-[url(https://images.unsplash.com/photo-1457221675774-24790d99071a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80)] bg-cover bg-center bg-no-repeat  ">
   <div class="container mx-auto flex flex-col items-center px-4 py-16 text-center md:py-32 md:px-10 lg:px-32 xl:max-w-3xl">
     <div>
-      <img src ="https://i.ibb.co/TWZ0dLh/image0.jpg" alt=""  class="flex items-center justify-center w-18 h-12 rounded-full bg-violet-400">
+      <img src ="https://i.ibb.co/TWZ0dLh/image0.jpg" alt=""  class="flex items-center justify-center w-20 h-15 rounded-full bg-violet-400">
     </div>
-    <h1 class="text-4xl font-bold leading-none sm:text-5xl">Quisquam necessita vel
-      <span class="text-violet-400">laborum doloribus</span>delectus
+    <h1 class="text-4xl font-bold text-gray-100 leading-none sm:text-5xl">Why buy when you can 
+      <span class="text-violet-400">borrow</span>?
     </h1>
-    <p class="px-8 mt-8 mb-12 text-lg">Cupiditate minima voluptate temporibus quia? Architecto beatae esse ab amet vero eaque explicabo!</p>
-    <div class="flex flex-wrap justify-center">
-      <a  href="{% url 'userprofile:add_product' %}" class="px-8 py-3 m-2 text-lg border rounded bg-gray-500 text-gray-300 border-gray-400">add product</a>
+    
+    <div class="flex flex-wrap justify-center ">
+      <a class="group relative inline-block focus:outline-none focus:ring mt-10 " href="{% url 'userprofile:add_product' %}">
+        <span class="absolute inset-0 translate-x-0 translate-y-0 bg-gray-300 transition-transform group-hover:translate-y-1.5 group-hover:translate-x-1.5"></span>
+        <span class="relative inline-block border-2 border-current px-8 py-3 text-sm font-bold uppercase tracking-widest" > Start now!</span>
+      </a>
     </div>
-    <div class="search max-w-7xl py-4 px-6 text-center mr-6 ">
-    <form method="get" action="/search" class="flex items-center" >
+   
+  </div>
+</section>
+<div class="flex flex-wrap justify-center mt-6">
+ <div class="search max-w-7xl py-4 px-6 text-center mr-6 ">
+    <form method="get" action="/search" class="flex items-center " >
       {% csrf_token %}
-      <label for="Search" class="hidden">Search</label>
+      <label for="Search" class="hidden text-gray-100  ">Search</label>
       <div class="relative">
           <button type="button" title="search" class="p-1 focus:outline-none focus:ring mt-6 ">
             <svg fill="currentColor" viewBox="0 0 512 512" class="w-4 h-4 text-gray-100">
@@ -24,11 +31,9 @@
             </svg>
           </button>
    
-        <input  type="search"  name="query" placeholder="Search..." class="w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none dark:bg-gray-800 text-gray-100 focus:dark:bg-gray-900 focus:dark:border-violet-400">
+        <input  type="search"  name="query" placeholder="Search..." class="bg-gray-400 w-32 py-2 pl-10 text-sm rounded-md sm:w-auto focus:outline-none bg-gray-800 text-gray-100 focus:dark:bg-gray-900 focus:dark:border-violet-400">
       </div>
-    </form></div>
-  </div>
-</section>
+    </form></div></div>
 <section>
   <div class="flex flex-wrap">
    {% for product in products %} 

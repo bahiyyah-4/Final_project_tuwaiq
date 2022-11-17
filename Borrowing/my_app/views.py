@@ -4,7 +4,7 @@ from product.models import Prodect
 # from .models import
 # Create your views here.
 
-
+#-----home--------
 def home(reguest):
 
     if reguest.user.is_authenticated:
@@ -14,10 +14,10 @@ def home(reguest):
 
     return render(reguest, 'my_app/home.html',{'products':products})
 
-
+#-----contact--------
 def contact(request ):
 
     return render(request,"my_app/contact.html")
-
+#-----about--------
 def about(reguest):
     return render(reguest, 'my_app/about.html')

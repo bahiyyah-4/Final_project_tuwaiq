@@ -8,10 +8,14 @@
     {% csrf_token %}
     {{form.as_p}}
     <button class="self-center px-8 py-3 text-lg rounded focus:ring hover:ring focus:ring-opacity-75 bg-gray-500 text-gray-300  focus:ring-violet-400 hover:ring-violet-400">submit</button>
-    {% if product %}
-    <a href="{% url 'userprofile:delete_product' product.id %}" ><button class="self-center px-8 py-3 text-lg rounded focus:ring hover:ring focus:ring-opacity-75 bg-gray-500 text-gray-300  focus:ring-violet-400 hover:ring-violet-400">Delete</button></a>
-    {% endif %}
+   
 </form>
+<div  class="items-center text-center  w-full  p-8  space-y-6 rounded-md   ng-untouched ng-pristine ng-valid">
+    {% if product %}
+     <a href="{% url 'userprofile:delete_product' product.id %}" ><button class="self-center px-8 py-3 text-lg rounded focus:ring hover:ring focus:ring-opacity-75 bg-gray-500 text-gray-300  focus:ring-violet-400 hover:ring-violet-400">Delete</button></a>
+   {% endif %}
+</div>
+
 
 
 
